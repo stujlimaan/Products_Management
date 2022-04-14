@@ -3,6 +3,7 @@ const express=require("express")
 const router=express.Router();
 const UserController=require("../controllers/userController")
 const ProductController=require("../controllers/productsController")
+const CartController=require("../controllers/cartController")
 const mid=require("../middlewares/auth")
 
 
@@ -18,6 +19,13 @@ router.get("/products",ProductController.getProducts)
 router.get("/products/:productId",ProductController.getProductsById)
 router.put("/products/:productId",ProductController.updateProducts)
 router.delete("/products/:productId",ProductController.deleteProducts)
+
+//api for cart
+router.post("/users/:userId/cart",CartController.addToCart)
+router.put("/users/:userId/cart",CartController.removeToCart)
+router.get("/users/:userId/cart",CartController.getToCart)
+router.delete("/users/:userId/cart",CartController.deleteToCart)
+
 
 
 
