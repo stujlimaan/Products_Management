@@ -10,44 +10,28 @@ const cartSchema = new mongoose.Schema({
     },
     items: [{
         productId: {
-<<<<<<< HEAD
-            type:objectId,
-=======
-            typr:objectId,
->>>>>>> 94e82bf684f353952bd324c67674591950bb58ac
-            ref:"Product",
-            required:true
+
+            type: objectId,
+
+            ref: "Product",
+            required: true
         },
         quantity: {
-            type:Number,
-            required:true,
-             minlength :1
+            type: Number,
+            required: true,
+            minlength: 1
         }
     }],
     totalPrice: {
-        type:Number,
-        required:true,
+        type: Number,
+        required: true,
         // comment: "Holds total price of all the items in the cart"
     },
     totalItems: {
-        type:Number,
-        required:true,
+        type: Number,
+        required: true,
         // comment: "Holds total number of items in the cart"
-<<<<<<< HEAD
     }
-   
-=======
-    },
-    createdAt: {
-        type:Date,
-        default:null
-
-    },  
-    updatedAt: {
-        type:Date,
-        default:null
-    },
->>>>>>> 94e82bf684f353952bd324c67674591950bb58ac
 }, {
     timestamps: true
 })
