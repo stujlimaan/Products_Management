@@ -4,7 +4,10 @@ const router=express.Router();
 const UserController=require("../controllers/userController")
 const ProductController=require("../controllers/productsController")
 const CartController=require("../controllers/cartController")
+<<<<<<< HEAD
 const OrderController=require("../controllers/orderController")
+=======
+>>>>>>> 94e82bf684f353952bd324c67674591950bb58ac
 const mid=require("../middlewares/auth")
 
 
@@ -22,6 +25,7 @@ router.put("/products/:productId",ProductController.updateProducts)
 router.delete("/products/:productId",ProductController.deleteProducts)
 
 //api for cart
+<<<<<<< HEAD
 router.post('/users/:userId/cart', mid.authentication, mid.authorization, CartController.createCart )
 router.put('/users/:userId/cart', mid.authentication, mid.authorization, CartController.updateCart )
 router.get('/users/:userId/cart', mid.authentication, mid.authorization, CartController.getCartDetails )
@@ -30,6 +34,14 @@ router.delete('/users/:userId/cart', mid.authentication, mid.authorization, Cart
 //api for order
 router.post("/users/:userId/orders",mid.authentication,mid.authorization,OrderController.createOrder)
 router.put("/users/:userId/orders",mid.authentication,mid.authorization,OrderController.updateStatus)
+=======
+router.post("/users/:userId/cart",CartController.addToCart)
+router.put("/users/:userId/cart",CartController.removeToCart)
+router.get("/users/:userId/cart",CartController.getToCart)
+router.delete("/users/:userId/cart",CartController.deleteToCart)
+
+
+>>>>>>> 94e82bf684f353952bd324c67674591950bb58ac
 
 
 module.exports =router

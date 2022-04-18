@@ -10,7 +10,11 @@ const cartSchema = new mongoose.Schema({
     },
     items: [{
         productId: {
+<<<<<<< HEAD
             type:objectId,
+=======
+            typr:objectId,
+>>>>>>> 94e82bf684f353952bd324c67674591950bb58ac
             ref:"Product",
             required:true
         },
@@ -29,8 +33,21 @@ const cartSchema = new mongoose.Schema({
         type:Number,
         required:true,
         // comment: "Holds total number of items in the cart"
+<<<<<<< HEAD
     }
    
+=======
+    },
+    createdAt: {
+        type:Date,
+        default:null
+
+    },  
+    updatedAt: {
+        type:Date,
+        default:null
+    },
+>>>>>>> 94e82bf684f353952bd324c67674591950bb58ac
 }, {
     timestamps: true
 })

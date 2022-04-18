@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 const CartModel=require("../models/cartModel")
+=======
+const CartModel=require("../controllers/cartController")
+>>>>>>> 94e82bf684f353952bd324c67674591950bb58ac
 const validator=require("../validations/validator")
 const UserModel=require("../models/userModel")
 const ProductModel=require("../models/productModel")
 
+<<<<<<< HEAD
 //*********************************************CREATE or ADD TO CART***************************************************** */
 
 const createCart = async function (req, res) {
@@ -426,3 +431,54 @@ module.exports = {
   getCartDetails,
   emptyCart
 };
+=======
+const addToCart=(req,res)=>{
+    try{
+        let userId=req.params.userId;
+        if(!userId){
+            return res.status(400).send({status:false,message:"please provide userId"})
+        }
+
+        if(userId && userId.length!=24){
+            return res.status(400).send({status:false,message:"please provide userId"})
+        }
+
+        const user=await UserModel.findOne({userId:userId})
+        
+        if(!user){
+            return res.status(400).send({status:false,message:"user does not exist"})
+        }
+
+        let 
+
+    }catch(err){
+        return res.status(500).send({status:false,message:err.message})
+    }
+}
+
+const removeToCart=(req,res)=>{
+    try{
+
+    }catch(err){
+        return res.status(500).send({status:false,message:err.message})
+    }
+}
+
+const getToCart=(req,res)=>{
+    try{
+
+    }catch(err){
+        return res.status(500).send({status:false,message:err.message})
+    }
+}
+
+const deleteToCart=(req,res)=>{
+    try{
+
+    }catch(err){
+        return res.status(500).send({status:false,message:err.message})
+    }
+}
+
+module.exports={addToCart,removeToCart,getToCart,deleteToCart}
+>>>>>>> 94e82bf684f353952bd324c67674591950bb58ac
