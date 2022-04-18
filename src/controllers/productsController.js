@@ -137,7 +137,7 @@ const createProducts=async (req,res)=>{
 
 
     }catch(err){
-      res.status(500).send({ error: error.message });
+      res.status(500).send({ error: err.message });
     }
 }
 
@@ -263,7 +263,7 @@ const getProducts=async (req,res)=>{
       }
 
     }catch(err){
-      res.status(500).send({ error: error.message });
+      res.status(500).send({ err: err.message });
     }
 }
 
@@ -299,7 +299,7 @@ const getProductsById=async (req,res)=>{
       .status(200)
       .send({ status: true, message: "success", data: productById });
     }catch(err){
-      res.status(500).send({ error: error.message });
+      res.status(500).send({ err: err.message });
     }
 }
 
@@ -487,7 +487,7 @@ const updateProducts=async (req,res)=>{
       data: updatedProduct,
     });
     }catch(err){
-      res.status(500).send({ error: error.message });
+      res.status(500).send({ err: err.message });
     }
 }
 
@@ -540,7 +540,7 @@ const deleteProducts=async (req,res)=>{
       .send({ status: true, message: "Product successfully deleted" });
 
     }catch(err){
-      res.status(500).send({ error: error.message });
+      res.status(500).send({ err: err.message });
     }
 }
 

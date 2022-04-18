@@ -3,6 +3,8 @@ const express=require("express")
 const router=express.Router();
 const UserController=require("../controllers/userController")
 const ProductController=require("../controllers/productsController")
+const CartController=require("../controllers/cartController")
+const OrderController=require("../controllers/orderController")
 const mid=require("../middlewares/auth")
 
 
@@ -19,6 +21,15 @@ router.get("/products/:productId",ProductController.getProductsById)
 router.put("/products/:productId",ProductController.updateProducts)
 router.delete("/products/:productId",ProductController.deleteProducts)
 
+//api for cart
+router.post('/users/:userId/cart', mid.authentication, mid.authorization, CartController.createCart )
+router.put('/users/:userId/cart', mid.authentication, mid.authorization, CartController.updateCart )
+router.get('/users/:userId/cart', mid.authentication, mid.authorization, CartController.getCartDetails )
+router.delete('/users/:userId/cart', mid.authentication, mid.authorization, CartController.emptyCart )
+
+//api for order
+router.post("/users/:userId/orders",mid.authentication,mid.authorization,OrderController.createOrder)
+router.put("/users/:userId/orders",mid.authentication,mid.authorization,OrderController.updateStatus)
 
 
 module.exports =router
