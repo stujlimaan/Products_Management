@@ -1,38 +1,36 @@
-//importing package and controllers
-const express = require("express")
-const router = express.Router();
-const UserController = require("../controllers/userController")
-const ProductController = require("../controllers/productsController")
-const CartController = require("../controllers/cartController")
-
-const OrderController = require("../controllers/orderController")
-const mid = require("../middlewares/auth")
+const express = require('express')
+const router = express.Router()
+const UserController = require('../controllers/userController')
+const Auth = require('../middleWares/auth')
+const ProductController = require('../controllers/productController')
+const CartController = require('../controllers/cartController')
+const OrderController = require('../controllers/orderController')
 
 
-//Api for users
-router.post("/register", UserController.register)
-router.post("/login", UserController.login)
-router.get("/user/:userId/profile", mid.authentication, UserController.getProfile)
-router.put("/user/:userId/profile", mid.authentication, UserController.updateProfile)
 
-//api for products'
-router.post("/products", ProductController.createProducts)
-router.get("/products", ProductController.getProducts)
-router.get("/products/:productId", ProductController.getProductsById)
-router.put("/products/:productId", ProductController.updateProducts)
-router.delete("/products/:productId", ProductController.deleteProducts)
+//*********************************USER API************************************************** */
+router.post('/register', UserController.userRegistration)
+router.post('/login', UserController.userLogin)
+router.get('/user/:userId/profile', Auth.authentication, Auth.authorization, UserController.profileDetails)
+router.post('/user/:userId/profile', Auth.authentication, Auth.authorization, UserController.userProfileUpdate)
 
-//api for cart
 
-router.post('/users/:userId/cart', mid.authentication, mid.authorization, CartController.createCart)
-router.put('/users/:userId/cart', mid.authentication, mid.authorization, CartController.updateCart)
-router.get('/users/:userId/cart', mid.authentication, mid.authorization, CartController.getCartDetails)
-router.delete('/users/:userId/cart', mid.authentication, mid.authorization, CartController.emptyCart)
+//*********************************PRODUCT API**************************************************** */
+router.post('/products', ProductController.registerProduct )
+router.get('/products', ProductController.filterProducts)
+router.get('/products/:productId', ProductController.getProduct)
+router.put('/products/:productId', ProductController.updateProductDetails)
+router.delete('/products/:productId', ProductController.deleteProduct)
 
-//api for order
-router.post("/users/:userId/orders", mid.authentication, mid.authorization, OrderController.createOrder)
-router.put("/users/:userId/orders", mid.authentication, mid.authorization, OrderController.updateStatus)
+//*************************************CART API***************************************************** */
+router.post('/users/:userId/cart', Auth.authentication, Auth.authorization, CartController.createCart )
+router.put('/users/:userId/cart', Auth.authentication, Auth.authorization, CartController.updateCart )
+router.get('/users/:userId/cart', Auth.authentication, Auth.authorization, CartController.getCartDetails )
+router.delete('/users/:userId/cart', Auth.authentication, Auth.authorization, CartController.emptyCart )
 
+//*************************************ORDER API***************************************************** */
+router.post('/users/:userId/orders', Auth.authentication, Auth.authorization, OrderController.createOrder )
+router.put('/users/:userId/orders', Auth.authentication, Auth.authorization, OrderController.updateOrderStatus )
 
 
 module.exports = router

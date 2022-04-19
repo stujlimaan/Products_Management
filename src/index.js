@@ -1,5 +1,5 @@
 //importing packages
-
+const dotenv=require("dotenv").config()
 const express =require("express");
 const bodyParser=require("body-parser")
 const mongoose=require("mongoose");
@@ -8,7 +8,7 @@ const multer=require("multer")
 
 //express initialize
 const app=express()
-
+console.log(process.env.SECRETKEY)
 //middleware for body parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))

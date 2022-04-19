@@ -1,45 +1,64 @@
-const jwt =require("jsonwebtoken")
+const jwt = require('jsonwebtoken')
+const UserModel = require('../models/userModel')
+const Validator = require('../utilities/validator')
 
-const authentication=(req,res,next)=>{
-    try{
-        const token=req.header('Authorization', 'Bearer Token')
-        if(!token){
-            return res.status(403).send({status:false,message:"please provide token"})
-        }
-        const tokenWithout=token.split(" ")[1]
-        console.log(tokenWithout)
+//********************************AUTHENTICATION********************************** */
 
-        const decodeToken=jwt.verify(tokenWithout,"tujliman",(err)=>{
-            if(err){
-       return res.status(401).send({status:false,message:`token invalid ${err.message}`})
+const authentication = async function(req, res, next){
 
-            }else{
-                       next()
-         }
-        })
-       
+    const bearerToken = req.headers["authorization"]
 
-
-    }catch(err){
-        return res.status(500).send({status:false,message:err.message})
+    if(!Validator.isValidInputValue(bearerToken)){
+        return res.status(401).send({status : false, message : "token is missing"})
     }
+    const token = bearerToken.split(" ")[1]
+    
+
+    const secretKey = '123451214654132466ASDFGwnweruhkwerbjhiHJKL!@#$%^&'
+
+    if(!token){
+        return res.status(401).send({status : false, message : "authentication failed : token not found"})
+    }
+
+    try{
+        const decodedToken = jwt.verify(token, secretKey, {ignoreExpiration: true})
+
+        if(Date.now() > decodedToken.exp * 1000){
+            return res.status(401).send({status : false, message : "authentication failed : Session expired"})
+        }
+
+        req.decodedToken = decodedToken
+
+        next()
+
+    }catch{
+        res.status(401).send({status : false, message : "authentication failed"})
+    }
+
+
+}
+//! authorization to be switched to handler
+
+const authorization = async function(req, res, next){
+    const userId = req.params.userId
+    const decodedToken = req.decodedToken
+
+    if(!Validator.isValidObjectId(userId)){
+        return res.status(400).send({status :false , message : " enter a valid userId"})
+    }
+
+    const userByUserId = await UserModel.findById(userId)
+  
+
+    if(!userByUserId){
+        return res.status(404).send({status :false , message : " user not found"}) 
+    }
+
+    if(userId !== decodedToken.userId){
+        return res.status(403).send({status :false , message : "unauthorized access"})  
+    }
+
+    next()
 }
 
-const authorization=(req,res,next)=>{
-    try{
-        const token=req.header('Authorization', 'Bearer Token');
-
-        if(!token){
-            return res.status(403).send({status:false,message:"please provide token"})
-        }
-        const decodedToken=jwt.verify(token,"tujliman")
-        const decodedTokenFromUserId=decodedToken.userId;
-        req.userId=decodedTokenFromUserId
-        next();
-
-    }catch(err){
-        return res.status(500).send({status:false,message:err.message})
-    }
-}
-
-module.exports={authentication,authorization}
+module.exports = {authentication, authorization}
