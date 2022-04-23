@@ -8,7 +8,7 @@ const multer=require("multer")
 
 //express initialize
 const app=express()
-console.log(process.env.SECRETKEY)
+// console.log(process.env.SECRETKEY)
 //middleware for body parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
@@ -16,9 +16,7 @@ app.use(multer().any())
 
 
 //connect database 
-mongoose.connect("mongodb+srv://Tujli:mst@cluster0.hlfbs.mongodb.net/ProductsManagement?retryWrites=true&w=majority",{
-    useNewUrlParser:true
-})
+mongoose.connect(process.env.MONGO_URL,{useNewUrlParser:true})
 .then(()=>console.log("mongodb is connected"))
 .catch((err)=>{console.log(err.message)})
 

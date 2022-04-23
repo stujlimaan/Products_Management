@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const UserController = require('../controllers/userController')
 const Auth = require('../middleWares/auth')
-const ProductController = require('../controllers/productController')
+const ProductController = require('../controllers/productsController')
 const CartController = require('../controllers/cartController')
 const OrderController = require('../controllers/orderController')
 
